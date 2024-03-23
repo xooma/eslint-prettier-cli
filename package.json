@@ -1,5 +1,5 @@
 {
-  "name": "estlint-prettier-cli",
+  "name": "eslint-prettier-cli",
   "version": "1.0.0",
   "description": "Personal CLI Eslint/Prettier Configurator",
   "scripts": {
