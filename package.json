@@ -1,0 +1,23 @@
+{
+  "name": "estlint-prettier-cli",
+  "version": "1.0.0",
+  "description": "Personal CLI Eslint/Prettier Configurator",
+  "scripts": {
+    "test": "jest",
+    "postinstall": "./src/cli.js"
+  },
+  "author": "maximilienb",
+  "license": "ISC",
+  "bin": {
+    "eslint-prettier-cli": "./src/cli.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.30",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2"
+  },
+  "dependencies": {
+    "inquirer": "^9.2.16"
+  }
+}
