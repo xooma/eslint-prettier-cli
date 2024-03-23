@@ -2,22 +2,38 @@
   "name": "eslint-prettier-cli",
   "version": "1.0.0",
   "description": "Personal CLI Eslint/Prettier Configurator",
+  "type": "module",
   "scripts": {
-    "test": "jest",
-    "postinstall": "./src/cli.js"
+    "start": "tsc && node dist/cli.js",
+    "build": "tsc",
+    "test": "tsc && node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:watch": "npm run test --watch",
+    "postinstall": "npm run build && node ./dist/cli.js"
   },
   "author": "maximilienb",
   "license": "ISC",
   "bin": {
-    "eslint-prettier-cli": "./src/cli.js"
+    "eslint-prettier-cli": "./src/cli.ts"
+  },
+  "jest": {
+    "transform": {},
+    "verbose": true,
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/*.spec.ts"
+    ]
   },
   "devDependencies": {
+    "@types/inquirer": "^9.0.7",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.30",
     "jest": "^29.7.0",
-    "ts-jest": "^29.1.2"
+    "ts-jest": "^29.1.2",
+    "typescript": "^5.4.3"
   },
   "dependencies": {
-    "inquirer": "^9.2.16"
+    "@inquirer/checkbox": "^2.2.0",
+    "commander": "^12.0.0"
   }
 }
