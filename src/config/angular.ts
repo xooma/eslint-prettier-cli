@@ -1,4 +1,4 @@
-import eslintConfig from './base/eslint.js';
+import eslintConfig from './base/eslint';
 import {mergeContentConfigurations} from "../utils/configuration.utils";
 
 const angularConfig = {

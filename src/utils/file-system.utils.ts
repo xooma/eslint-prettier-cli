@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import { exec } from 'child_process';
 
-import { EslintConfigStructure } from '../types/eslint-config-structure.interface.js';
+import { EslintConfigStructure } from '../types/eslint-config-structure.interface';
 
 export const createEslintrcFile = (config: EslintConfigStructure) =>
   fs.writeFileSync('.eslintrc', `${JSON.stringify(config, null, 2)}`);

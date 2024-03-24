@@ -1,5 +1,5 @@
 import checkbox from '@inquirer/checkbox';
-import { init } from '../cli.js';
+import {init} from '../cli';
 
 jest.mock('@inquirer/checkbox');
 jest.mock('commander', () => {
@@ -15,6 +15,13 @@ jest.mock('commander', () => {
     }))
   }
 });
+jest.mock('fs', () => ({
+  writeFileSync: jest.fn(),
+}));
+
+jest.mock('child_process', () => ({
+  exec: jest.fn((cmd, callback) => callback(null)),
+}));
 
 describe('Cli', () => {
   afterEach(() => jest.resetAllMocks())
@@ -24,30 +31,4 @@ describe('Cli', () => {
 
     expect(checkbox).not.toHaveBeenCalled();
   })
-})
-
-// describe('CLI Integration Test', () => {
-//   const testDir = join(__dirname, 'testProject');
-//   const eslintrcPath = join(testDir, '.eslintrc.js');
-//
-//   beforeAll(() => {
-//     if (!existsSync(testDir)) mkdirSync(testDir);
-//   });
-//
-//   afterAll(() => {
-//     if (existsSync(eslintrcPath)) unlinkSync(eslintrcPath);
-//     if (existsSync(testDir)) rmdirSync(testDir, { recursive: true }); // Utilisez recursive pour Node.js >= v12.10.0
-//   });
-//
-//   test('CLI applique la configuration Angular et TypeScript', async () => {
-//     execSync(`node ../../../dist/cli.js --config angular,typescript`, {
-//       cwd: testDir
-//     });
-//
-//     expect(existsSync(eslintrcPath)).toBeTruthy();
-//
-//     const eslintrcContent = readFileSync(eslintrcPath, 'utf8');
-//     expect(eslintrcContent).toMatch(/angular/);
-//     expect(eslintrcContent).toMatch(/typescript/);
-//   });
-// });
+});

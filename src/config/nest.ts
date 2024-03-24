@@ -1,5 +1,4 @@
-import prettierOptions from './base/prettier.js';
-import eslintConfig from './base/eslint.js';
+import eslintConfig from './base/eslint';
 
 export default {
   ...eslintConfig,

@@ -1,4 +1,4 @@
-import prettierConfig from './prettier.js';
+import prettierConfig from './prettier';
 
 export default {
   root: true,

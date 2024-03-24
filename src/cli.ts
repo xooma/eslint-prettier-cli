@@ -1,8 +1,8 @@
 import checkbox from '@inquirer/checkbox';
 import { Command } from 'commander';
-import { ProjectConfigType } from './types/project-config.type.js';
-import { loadConfiguration } from './utils/configuration.utils.js';
-import { createEslintrcFile, extractDependencies, installDependencies } from './utils/file-system.utils.js';
+import { ProjectConfigType } from './types/project-config.type';
+import { loadConfiguration } from './utils/configuration.utils';
+import { createEslintrcFile, extractDependencies, installDependencies } from './utils/file-system.utils';
 
 const questions = [
   {
@@ -13,8 +13,8 @@ const questions = [
     choices: [
       { name: 'npm', value: 'npm' },
       { name: 'pnpm', value: 'pnpm' },
-      { name: 'yarn', value: 'yarn' }
-    ]
+      { name: 'yarn', value: 'yarn' },
+    ],
   },
   {
     type: 'checkbox',
@@ -26,7 +26,7 @@ const questions = [
       { name: 'NestJS', value: 'nest' },
       { name: 'TypeScript', value: 'typescript' },
     ],
-  }
+  },
 ];
 
 const program = new Command();
@@ -65,12 +65,12 @@ async function getResults() {
 
 export const init = async () => {
   const results = await getResults();
-  const configuration = await loadConfiguration(results );
+  const configuration = await loadConfiguration(results);
 
-  console.log(configuration)
-  const dependencies = extractDependencies(configuration)
+  console.log(configuration);
+  const dependencies = extractDependencies(configuration);
 
-  console.log(dependencies)
+  console.log(dependencies);
 
   createEslintrcFile(configuration);
   installDependencies(dependencies);

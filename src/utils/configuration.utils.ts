@@ -1,11 +1,11 @@
 import { join } from 'path';
-import { EslintConfigStructure } from '../types/eslint-config-structure.interface.js';
-import { EslintRawConfig } from '../types/eslint-raw-config.interface.js';
-import { ProjectConfigType } from '../types/project-config.type.js';
+import { EslintConfigStructure } from '../types/eslint-config-structure.interface';
+import { EslintRawConfig } from '../types/eslint-raw-config.interface';
+import { ProjectConfigType } from '../types/project-config.type';
 
 const mergeDeep = (target: any, source: any): any => {
   if (Array.isArray(target) && Array.isArray(source)) {
-    return Array.from(new Set([...target, ...source]));
+    return Array.from(new Set([ ...target, ...source ]));
   } else if (typeof target === 'object' && typeof source === 'object') {
     return Object.keys(source).reduce((acc, key) => {
       if (typeof source[key] === 'object' && key in acc) {
