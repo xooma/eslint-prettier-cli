@@ -1,1 +1,1 @@
-export type ProjectConfigType = 'angular' | 'nest' | 'ts';
+export type ProjectConfigType = 'angular' | 'nest' | 'typescript';

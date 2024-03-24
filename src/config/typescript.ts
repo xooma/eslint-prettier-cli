@@ -1,6 +1,7 @@
-import prettierOptions from './base/prettier';
+import eslintConfig from './base/eslint.js';
 
 export default {
+  ...eslintConfig,
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
@@ -17,9 +18,5 @@ export default {
     '@typescript-eslint/class-method-use-this': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-explicit-any': 'error',
-    'prettier/prettier': [
-      'error',
-      prettierOptions
-    ],
   },
 };

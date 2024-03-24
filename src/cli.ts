@@ -1,9 +1,21 @@
 import checkbox from '@inquirer/checkbox';
 import { Command } from 'commander';
-import { ProjectConfigType } from './types/project-config.type';
-import { loadConfiguration } from './utils/configuration.utils';
+import { ProjectConfigType } from './types/project-config.type.js';
+import { loadConfiguration } from './utils/configuration.utils.js';
+import { createEslintrcFile, extractDependencies, installDependencies } from './utils/file-system.utils.js';
 
 const questions = [
+  {
+    type: 'checkbox',
+    name: 'pkg-manager',
+    message: 'Quel gestionnaire de package utilisez-vous ?',
+    required: true,
+    choices: [
+      { name: 'npm', value: 'npm' },
+      { name: 'pnpm', value: 'pnpm' },
+      { name: 'yarn', value: 'yarn' }
+    ]
+  },
   {
     type: 'checkbox',
     name: 'configs',
@@ -12,9 +24,9 @@ const questions = [
     choices: [
       { name: 'Angular', value: 'angular' },
       { name: 'NestJS', value: 'nest' },
-      { name: 'TypeScript', value: 'ts' },
+      { name: 'TypeScript', value: 'typescript' },
     ],
-  },
+  }
 ];
 
 const program = new Command();
@@ -32,19 +44,36 @@ const getConfigInlineCommandValues = (): Array<ProjectConfigType> => {
     });
 
   const result = program.parse(process.argv).getOptionValue('config');
-  return parseConfig(result);
+
+  return result ? parseConfig(result) : result;
 };
 
 const askQuestions = async (): Promise<Array<ProjectConfigType>> => {
-  return checkbox({ ...questions[0] }, {}).then((answers) => {
+  return checkbox({ ...questions[1] }, {}).then((answers) => {
     console.log(`Configurations choisies: ${answers}`);
     return <Array<ProjectConfigType>>answers;
   });
 };
 
+async function getResults() {
+  let resultsFromCmdLine = getConfigInlineCommandValues();
+
+  if (!resultsFromCmdLine) resultsFromCmdLine = await askQuestions();
+
+  return resultsFromCmdLine;
+}
+
 export const init = async () => {
-  const results = getConfigInlineCommandValues() || await askQuestions();
-  console.log(loadConfiguration(results));
+  const results = await getResults();
+  const configuration = await loadConfiguration(results );
+
+  console.log(configuration)
+  const dependencies = extractDependencies(configuration)
+
+  console.log(dependencies)
+
+  createEslintrcFile(configuration);
+  installDependencies(dependencies);
 };
 
 init();

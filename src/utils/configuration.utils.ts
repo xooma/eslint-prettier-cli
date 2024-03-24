@@ -1,42 +1,32 @@
 import { join } from 'path';
-import { EslintConfigStructure } from '../types/eslint-config-structure.interface';
-import { EslintRawConfig } from '../types/eslint-raw-config.interface';
-import { ProjectConfigType } from '../types/project-config.type';
+import { EslintConfigStructure } from '../types/eslint-config-structure.interface.js';
+import { EslintRawConfig } from '../types/eslint-raw-config.interface.js';
+import { ProjectConfigType } from '../types/project-config.type.js';
 
-function mergeDeep(target: any, source: any | Object): Array<unknown> | Object {
+const mergeDeep = (target: any, source: any): any => {
   if (Array.isArray(target) && Array.isArray(source)) {
-
     return Array.from(new Set([...target, ...source]));
   } else if (typeof target === 'object' && typeof source === 'object') {
-
-    Object.keys(source).forEach(key => {
-      if (typeof source[key] === 'object' && key in target) {
-        target[key] = mergeDeep(target[key], source[key]);
+    return Object.keys(source).reduce((acc, key) => {
+      if (typeof source[key] === 'object' && key in acc) {
+        acc[key] = mergeDeep(acc[key], source[key]);
       } else {
-        target[key] = source[key];
+        acc[key] = source[key];
       }
-    });
-
-    return target;
+      return acc;
+    }, target);
   }
-
   return source;
-}
+};
 
-export async function getConfiguration(configName: string): Promise<EslintConfigStructure> {
-  return await import(join('../config', configName)).then((v: EslintRawConfig) => v.default)
-}
+export const getConfiguration = async (configName: ProjectConfigType): Promise<EslintConfigStructure> =>
+  import(join('../config', configName)).then((v: EslintRawConfig) => v.default);
 
-export async function getMultipleConfigurations(configNames: Array<string>): Promise<Array<EslintConfigStructure>> {
-  const confPromises = configNames.map((configName) => getConfiguration(configName));
+export const getMultipleConfigurations = async (configNames: ProjectConfigType[]): Promise<EslintConfigStructure[]> =>
+  Promise.all(configNames.map(getConfiguration));
 
-  return await Promise.all(confPromises);
-}
+export const mergeContentConfigurations = (configs: EslintConfigStructure[]): EslintConfigStructure =>
+  configs.reduce((acc, config) => mergeDeep(acc, config), {});
 
-export function mergeContentConfigurations(configs: Array<EslintConfigStructure>): EslintConfigStructure {
-  return configs.reduce((acc, config) => mergeDeep(acc, config), {});
-}
-
-export async function loadConfiguration(args: Array<ProjectConfigType>): Promise<EslintConfigStructure> {
-  return await getMultipleConfigurations(args).then().then((configs) => mergeContentConfigurations(configs));
-}
+export const loadConfiguration = async (args: ProjectConfigType[]): Promise<EslintConfigStructure> =>
+  getMultipleConfigurations(args).then(mergeContentConfigurations);

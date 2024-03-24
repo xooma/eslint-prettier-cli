@@ -1,9 +1,9 @@
-import angularConfig from '../config/angular';
-import nestConfig from '../config/nest';
-import { getConfiguration, getMultipleConfigurations, mergeContentConfigurations } from '../utils/configuration.utils';
-import { angularConfigMock, mergedResultMock, nestConfigMock } from './config.data';
+import angularConfig from '../config/angular.js';
+import nestConfig from '../config/nest.js';
+import { getConfiguration, getMultipleConfigurations, mergeContentConfigurations } from '../utils/configuration.utils.js';
+import { angularConfigMock, mergedResultMock, nestConfigMock } from './config.data.js';
 
-describe('getConfig', () => {
+describe('configUtils', () => {
   it('should correctly get the configuration', async () => {
     const config = await getConfiguration('angular');
 

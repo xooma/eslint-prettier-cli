@@ -1,5 +1,5 @@
 import checkbox from '@inquirer/checkbox';
-import { init } from '../cli';
+import { init } from '../cli.js';
 
 jest.mock('@inquirer/checkbox');
 jest.mock('commander', () => {

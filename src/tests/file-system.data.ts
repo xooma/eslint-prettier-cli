@@ -1,9 +1,29 @@
-import eslintConfig from './base/eslint.js';
-import {mergeContentConfigurations} from "../utils/configuration.utils";
-
-const angularConfig = {
-  ...eslintConfig,
+export const mockConfig = {
+  root: true,
   overrides: [
+    {
+      files: [ '*.ts' ],
+      env: {
+        browser: true,
+        es6: true,
+        node: true,
+      },
+      extends: [ 'plugin:prettier/recommended' ],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        project: 'tsconfig.json',
+        sourceType: 'module',
+      },
+      plugins: [
+        'eslint-plugin-unicorn',
+        'eslint-plugin-jsdoc',
+        'eslint-plugin-import',
+        'eslint-plugin-no-null',
+        'eslint-plugin-prefer-arrow',
+        '@typescript-eslint',
+        'prettier',
+      ],
+    },
     {
       files: [ '*.ts' ],
       plugins: [
@@ -27,22 +47,5 @@ const angularConfig = {
         '@angular-eslint/use-pipe-transform-interface': 'error',
       },
     },
-    {
-      files: [ '*.html' ],
-      parser: '@angular-eslint/template-parser',
-      parserOptions: {
-        project: [ 'tsconfig.json' ],
-      },
-      extends: [ 'plugin:@angular-eslint/template/recommended' ],
-      rules: {
-        '@angular-eslint/template/banana-in-box': 'error',
-        '@angular-eslint/template/no-negated-async': 'error',
-        'max-len': [ 'error', { code: 150 } ],
-      },
-    },
   ],
 };
-
-const angularEslintConfig = mergeContentConfigurations([eslintConfig, angularConfig])
-
-export default angularEslintConfig;

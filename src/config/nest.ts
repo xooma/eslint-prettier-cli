@@ -1,6 +1,8 @@
-import prettierOptions from './base/prettier';
+import prettierOptions from './base/prettier.js';
+import eslintConfig from './base/eslint.js';
 
 export default {
+  ...eslintConfig,
   extends: [
     'eslint:recommended',
     'plugin:@nestjs/eslint-plugin-nest/recommended',
@@ -8,9 +10,5 @@ export default {
   ],
   rules: {
     '@nestjs/eslint-plugin-nest/use-pipe-decorator': 'off',
-    'prettier/prettier': [
-      'error',
-      prettierOptions
-    ],
   },
 };

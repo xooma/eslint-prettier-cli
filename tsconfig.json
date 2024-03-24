@@ -1,20 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "lib": ["es2018"],
-    "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "Node",
-    "resolveJsonModule": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "target": "es2018", // Compile to ES2018, you can choose ESNext for the latest features
+    "module": "commonjs", // CommonJS modules for Node.js compatibility
+    "outDir": "./dist", // Output directory for compiled files
+    "rootDir": "./src", // Root directory for source files
+    "strict": true, // Enable all strict type-checking options
+    "esModuleInterop": true, // Enables emit interoperability between CommonJS and ES Modules
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "forceConsistentCasingInFileNames": true, // Disallow inconsistently-cased references to the same file
+    "sourceMap": true // Enable source map generation for debugging
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "src/tests"]
+  "exclude": ["node_modules", "**/*.spec.ts", "**/*.test.ts"], // Exclude node_modules and test files from the build
+  "include": ["src/**/*.ts"] // Include all TypeScript files in src
 }
