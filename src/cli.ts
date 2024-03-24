@@ -1,31 +1,50 @@
 import checkbox from '@inquirer/checkbox';
 import { Command } from 'commander';
-import prompts from './models/prompts'
+import { ProjectConfigType } from './types/project-config.type';
+import { loadConfiguration } from './utils/configuration.utils';
 
-export class Cli {
-  private readonly program = new Command();
-  private readonly questions = prompts;
+const questions = [
+  {
+    type: 'checkbox',
+    name: 'configs',
+    message: 'Quelles configurations souhaitez-vous appliquer ?',
+    required: true,
+    choices: [
+      { name: 'Angular', value: 'angular' },
+      { name: 'NestJS', value: 'nest' },
+      { name: 'TypeScript', value: 'ts' },
+    ],
+  },
+];
 
-  constructor() {
-    if (!this.getConfigInlineCommandValues()) this.askQuestions();
-  }
+const program = new Command();
 
-  private getConfigInlineCommandValues() {
-    this.program
-      .version('0.1.0')
-      .option('--config <configs>', 'Spécifie une ou plusieurs configurations, séparées par des virgules', this.parseConfig)
-      .action((options) => {
-        console.log('Configurations choisies:', options?.config);
-      });
+const parseConfig = (value: string): Array<ProjectConfigType> => {
+  return <Array<ProjectConfigType>>value.split(',');
+};
 
-    return this.program.parse(process.argv).getOptionValue('config');
-  }
+const getConfigInlineCommandValues = (): Array<ProjectConfigType> => {
+  program
+    .version('0.1.0')
+    .option('--config <configs>', 'Spécifie une ou plusieurs configurations, séparées par des virgules', parseConfig)
+    .action((options) => {
+      console.log('Configurations choisies:', options?.config);
+    });
 
-  private async askQuestions() {
-    await checkbox({ ...this.questions[0] }, {}).then((answers) => console.log(`Configurations choisies: ${answers}`));
-  }
+  const result = program.parse(process.argv).getOptionValue('config');
+  return parseConfig(result);
+};
 
-  private parseConfig(value: string): Array<string> {
-    return value.split(',');
-  }
-}
+const askQuestions = async (): Promise<Array<ProjectConfigType>> => {
+  return checkbox({ ...questions[0] }, {}).then((answers) => {
+    console.log(`Configurations choisies: ${answers}`);
+    return <Array<ProjectConfigType>>answers;
+  });
+};
+
+export const init = async () => {
+  const results = getConfigInlineCommandValues() || await askQuestions();
+  console.log(loadConfiguration(results));
+};
+
+init();

@@ -1,0 +1,1 @@
+export type ProjectConfigType = 'angular' | 'nest' | 'ts';

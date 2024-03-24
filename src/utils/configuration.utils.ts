@@ -1,12 +1,7 @@
 import { join } from 'path';
-
-type EslintConfigStructure = {
-  [key: string]: any;
-}
-
-interface EslintConfigFile {
-  default: {};
-}
+import { EslintConfigStructure } from '../types/eslint-config-structure.interface';
+import { EslintRawConfig } from '../types/eslint-raw-config.interface';
+import { ProjectConfigType } from '../types/project-config.type';
 
 function mergeDeep(target: any, source: any | Object): Array<unknown> | Object {
   if (Array.isArray(target) && Array.isArray(source)) {
@@ -29,7 +24,7 @@ function mergeDeep(target: any, source: any | Object): Array<unknown> | Object {
 }
 
 export async function getConfiguration(configName: string): Promise<EslintConfigStructure> {
-  return await import(join('../config', configName)).then((v: EslintConfigFile) => v.default)
+  return await import(join('../config', configName)).then((v: EslintRawConfig) => v.default)
 }
 
 export async function getMultipleConfigurations(configNames: Array<string>): Promise<Array<EslintConfigStructure>> {
@@ -40,4 +35,8 @@ export async function getMultipleConfigurations(configNames: Array<string>): Pro
 
 export function mergeContentConfigurations(configs: Array<EslintConfigStructure>): EslintConfigStructure {
   return configs.reduce((acc, config) => mergeDeep(acc, config), {});
+}
+
+export async function loadConfiguration(args: Array<ProjectConfigType>): Promise<EslintConfigStructure> {
+  return await getMultipleConfigurations(args).then().then((configs) => mergeContentConfigurations(configs));
 }

@@ -1,6 +1,6 @@
-import prettierOptions from './prettier';
+import prettierConfig from './prettier';
 
-export const generalConfig = {
+export default {
   root: true,
   overrides: [
     {
@@ -26,7 +26,7 @@ export const generalConfig = {
         "prettier",
       ],
       rules: {
-        "prettier/prettier": ["error", prettierOptions],
+        "prettier/prettier": ["error", prettierConfig],
         "@typescript-eslint/adjacent-overload-signatures": "error",
         "@typescript-eslint/array-type": ["warn", { default: "generic" }],
         "@typescript-eslint/consistent-type-definitions": "error",

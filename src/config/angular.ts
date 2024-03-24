@@ -1,4 +1,7 @@
+import eslintConfig from './base/eslint';
+
 export default {
+  ...eslintConfig,
   overrides: [
     {
       files: [ '*.ts' ],

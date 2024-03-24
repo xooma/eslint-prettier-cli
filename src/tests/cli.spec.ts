@@ -1,5 +1,5 @@
-import { Cli } from '../cli';
 import checkbox from '@inquirer/checkbox';
+import { init } from '../cli';
 
 jest.mock('@inquirer/checkbox');
 jest.mock('commander', () => {
@@ -20,7 +20,7 @@ describe('Cli', () => {
   afterEach(() => jest.resetAllMocks())
 
   it('should not askQuestions if command line args exist', async () => {
-    new Cli();
+    await init();
 
     expect(checkbox).not.toHaveBeenCalled();
   })
