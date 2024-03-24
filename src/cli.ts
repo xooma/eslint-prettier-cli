@@ -1,20 +1,10 @@
 import checkbox from '@inquirer/checkbox';
 import { Command } from 'commander';
+import prompts from './models/prompts'
 
 export class Cli {
   private readonly program = new Command();
-  private readonly questions = [
-    {
-      type: 'checkbox',
-      name: 'configs',
-      message: 'Quelles configurations souhaitez-vous appliquer?',
-      required: true,
-      choices: [ { name: 'Angular', value: 'angular' }, { name: 'NestJS', value: 'nest' }, {
-        name: 'TypeScript',
-        value: 'ts',
-      } ],
-    },
-  ];
+  private readonly questions = prompts;
 
   constructor() {
     if (!this.getConfigInlineCommandValues()) this.askQuestions();

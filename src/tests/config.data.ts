@@ -1,4 +1,4 @@
-import prettierOptions from '../base/prettier.config';
+import prettierOptions from '../config/base/prettier';
 
 export const angularConfigMock = {
   extends: [

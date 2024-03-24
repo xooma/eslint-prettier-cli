@@ -1,4 +1,4 @@
-import prettierOptions from '../base/prettier.config';
+import prettierOptions from './prettier';
 
 export default {
   extends: [
