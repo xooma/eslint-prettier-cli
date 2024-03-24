@@ -1,20 +1,23 @@
 import eslintConfig from './base/eslint';
-import {mergeContentConfigurations} from "../utils/configuration.utils";
+import { mergeContentConfigurations } from '../utils/configuration.utils';
+import { EslintConfigStructure } from 'src/types/eslint-config-structure.interface';
 
-const angularConfig = {
+const angularConfig: EslintConfigStructure = {
   ...eslintConfig,
   overrides: [
     {
-      files: [ '*.ts' ],
-      plugins: [
-        '@angular-eslint/eslint-plugin',
-        '@angular-eslint/eslint-plugin-template',
-      ],
+      files: ['*.ts'],
+      plugins: ['@angular-eslint/eslint-plugin', '@angular-eslint/eslint-plugin-template'],
       rules: {
-        '@angular-eslint/component-class-suffix': [ 'error', { suffixes: [ 'Composant', 'Component', 'View', 'Page', 'Vue', 'Base' ] } ],
-        '@angular-eslint/component-selector': [ 'error', { type: 'element', prefix: 'eic', style: 'kebab-case' } ],
+        '@angular-eslint/component-class-suffix': [
+          'error',
+          {
+            suffixes: ['Composant', 'Component', 'View', 'Page', 'Vue', 'Base'],
+          },
+        ],
+        '@angular-eslint/component-selector': ['error', { type: 'element', prefix: 'eic', style: 'kebab-case' }],
         '@angular-eslint/contextual-lifecycle': 'error',
-        '@angular-eslint/directive-class-suffix': [ 'error', { suffixes: [ 'Directive', 'Validator', 'Validateur' ] } ],
+        '@angular-eslint/directive-class-suffix': ['error', { suffixes: ['Directive', 'Validator', 'Validateur'] }],
         '@angular-eslint/no-host-metadata-property': 'error',
         '@angular-eslint/no-input-rename': 'error',
         '@angular-eslint/no-inputs-metadata-property': 'error',
@@ -28,21 +31,21 @@ const angularConfig = {
       },
     },
     {
-      files: [ '*.html' ],
+      files: ['*.html'],
       parser: '@angular-eslint/template-parser',
       parserOptions: {
-        project: [ 'tsconfig.json' ],
+        project: ['tsconfig.json'],
       },
-      extends: [ 'plugin:@angular-eslint/template/recommended' ],
+      extends: ['plugin:@angular-eslint/template/recommended'],
       rules: {
         '@angular-eslint/template/banana-in-box': 'error',
         '@angular-eslint/template/no-negated-async': 'error',
-        'max-len': [ 'error', { code: 150 } ],
+        'max-len': ['error', { code: 150 }],
       },
     },
   ],
 };
 
-const angularEslintConfig = mergeContentConfigurations([eslintConfig, angularConfig])
+const angularEslintConfig = mergeContentConfigurations([eslintConfig, angularConfig]);
 
 export default angularEslintConfig;

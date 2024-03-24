@@ -1,13 +1,10 @@
 import eslintConfig from './base/eslint';
+import { mergeContentConfigurations } from '../utils/configuration.utils';
+import { EslintConfigStructure } from '../types/eslint-config-structure.interface';
 
-export default {
+const typescriptConfig: EslintConfigStructure = {
   ...eslintConfig,
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/eslint-recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
@@ -20,3 +17,7 @@ export default {
     '@typescript-eslint/no-explicit-any': 'error',
   },
 };
+
+const typescriptEslintConfig = mergeContentConfigurations([eslintConfig, typescriptConfig]);
+
+export default typescriptEslintConfig;
